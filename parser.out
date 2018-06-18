@@ -1,0 +1,715 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> statements
+Rule 2     argument -> ARG
+Rule 3     argument -> DOLLAR ARG
+Rule 4     assign -> command EQUALS command
+Rule 5     command -> argument
+Rule 6     command -> command argument
+Rule 7     command -> command PIPE command
+Rule 8     if_condition -> IF L_RECT argument cond_op argument R_RECT
+Rule 9     cond_op -> EQ
+Rule 10    cond_op -> NE
+Rule 11    cond_op -> LT
+Rule 12    cond_op -> GT
+Rule 13    if_statement -> if_condition END THEN END statements END FI
+Rule 14    if_else -> if_condition END THEN END statements END ELSE END statements END FI
+Rule 15    command -> command RIGHT argument
+Rule 16    statement -> command
+Rule 17    statement -> assign
+Rule 18    statement -> if_statement
+Rule 19    statement -> if_else
+Rule 20    separator -> SEMICOLON
+Rule 21    separator -> END
+Rule 22    separator -> separator END
+Rule 23    separator -> separator SEMICOLON
+Rule 24    statements -> statement
+Rule 25    statements -> statements separator statement
+
+Terminals, with rules where they appear
+
+ARG                  : 2 3
+DOLLAR               : 3
+ELSE                 : 14
+END                  : 13 13 13 14 14 14 14 14 21 22
+EQ                   : 9
+EQUALS               : 4
+FI                   : 13 14
+GT                   : 12
+IF                   : 8
+LT                   : 11
+L_RECT               : 8
+NE                   : 10
+PIPE                 : 7
+RIGHT                : 15
+R_RECT               : 8
+SEMICOLON            : 20 23
+THEN                 : 13 14
+error                : 
+
+Nonterminals, with rules where they appear
+
+argument             : 5 6 8 8 15
+assign               : 17
+command              : 4 4 6 7 7 15 16
+cond_op              : 8
+if_condition         : 13 14
+if_else              : 19
+if_statement         : 18
+program              : 0
+separator            : 22 23 25
+statement            : 24 25
+statements           : 1 13 14 14 25
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . statements
+    (24) statements -> . statement
+    (25) statements -> . statements separator statement
+    (16) statement -> . command
+    (17) statement -> . assign
+    (18) statement -> . if_statement
+    (19) statement -> . if_else
+    (5) command -> . argument
+    (6) command -> . command argument
+    (7) command -> . command PIPE command
+    (15) command -> . command RIGHT argument
+    (4) assign -> . command EQUALS command
+    (13) if_statement -> . if_condition END THEN END statements END FI
+    (14) if_else -> . if_condition END THEN END statements END ELSE END statements END FI
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+    (8) if_condition -> . IF L_RECT argument cond_op argument R_RECT
+
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+    IF              shift and go to state 12
+
+    program                        shift and go to state 1
+    statements                     shift and go to state 2
+    statement                      shift and go to state 3
+    command                        shift and go to state 4
+    assign                         shift and go to state 5
+    if_statement                   shift and go to state 6
+    if_else                        shift and go to state 7
+    argument                       shift and go to state 8
+    if_condition                   shift and go to state 9
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> statements .
+    (25) statements -> statements . separator statement
+    (20) separator -> . SEMICOLON
+    (21) separator -> . END
+    (22) separator -> . separator END
+    (23) separator -> . separator SEMICOLON
+
+    $end            reduce using rule 1 (program -> statements .)
+    SEMICOLON       shift and go to state 14
+    END             shift and go to state 15
+
+    separator                      shift and go to state 13
+
+state 3
+
+    (24) statements -> statement .
+
+    SEMICOLON       reduce using rule 24 (statements -> statement .)
+    END             reduce using rule 24 (statements -> statement .)
+    $end            reduce using rule 24 (statements -> statement .)
+
+
+state 4
+
+    (16) statement -> command .
+    (6) command -> command . argument
+    (7) command -> command . PIPE command
+    (15) command -> command . RIGHT argument
+    (4) assign -> command . EQUALS command
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+
+    SEMICOLON       reduce using rule 16 (statement -> command .)
+    END             reduce using rule 16 (statement -> command .)
+    $end            reduce using rule 16 (statement -> command .)
+    PIPE            shift and go to state 17
+    RIGHT           shift and go to state 18
+    EQUALS          shift and go to state 19
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+
+    argument                       shift and go to state 16
+
+state 5
+
+    (17) statement -> assign .
+
+    SEMICOLON       reduce using rule 17 (statement -> assign .)
+    END             reduce using rule 17 (statement -> assign .)
+    $end            reduce using rule 17 (statement -> assign .)
+
+
+state 6
+
+    (18) statement -> if_statement .
+
+    SEMICOLON       reduce using rule 18 (statement -> if_statement .)
+    END             reduce using rule 18 (statement -> if_statement .)
+    $end            reduce using rule 18 (statement -> if_statement .)
+
+
+state 7
+
+    (19) statement -> if_else .
+
+    SEMICOLON       reduce using rule 19 (statement -> if_else .)
+    END             reduce using rule 19 (statement -> if_else .)
+    $end            reduce using rule 19 (statement -> if_else .)
+
+
+state 8
+
+    (5) command -> argument .
+
+    PIPE            reduce using rule 5 (command -> argument .)
+    RIGHT           reduce using rule 5 (command -> argument .)
+    EQUALS          reduce using rule 5 (command -> argument .)
+    ARG             reduce using rule 5 (command -> argument .)
+    DOLLAR          reduce using rule 5 (command -> argument .)
+    SEMICOLON       reduce using rule 5 (command -> argument .)
+    END             reduce using rule 5 (command -> argument .)
+    $end            reduce using rule 5 (command -> argument .)
+
+
+state 9
+
+    (13) if_statement -> if_condition . END THEN END statements END FI
+    (14) if_else -> if_condition . END THEN END statements END ELSE END statements END FI
+
+    END             shift and go to state 20
+
+
+state 10
+
+    (2) argument -> ARG .
+
+    PIPE            reduce using rule 2 (argument -> ARG .)
+    RIGHT           reduce using rule 2 (argument -> ARG .)
+    EQUALS          reduce using rule 2 (argument -> ARG .)
+    ARG             reduce using rule 2 (argument -> ARG .)
+    DOLLAR          reduce using rule 2 (argument -> ARG .)
+    SEMICOLON       reduce using rule 2 (argument -> ARG .)
+    END             reduce using rule 2 (argument -> ARG .)
+    $end            reduce using rule 2 (argument -> ARG .)
+    EQ              reduce using rule 2 (argument -> ARG .)
+    NE              reduce using rule 2 (argument -> ARG .)
+    LT              reduce using rule 2 (argument -> ARG .)
+    GT              reduce using rule 2 (argument -> ARG .)
+    R_RECT          reduce using rule 2 (argument -> ARG .)
+
+
+state 11
+
+    (3) argument -> DOLLAR . ARG
+
+    ARG             shift and go to state 21
+
+
+state 12
+
+    (8) if_condition -> IF . L_RECT argument cond_op argument R_RECT
+
+    L_RECT          shift and go to state 22
+
+
+state 13
+
+    (25) statements -> statements separator . statement
+    (22) separator -> separator . END
+    (23) separator -> separator . SEMICOLON
+    (16) statement -> . command
+    (17) statement -> . assign
+    (18) statement -> . if_statement
+    (19) statement -> . if_else
+    (5) command -> . argument
+    (6) command -> . command argument
+    (7) command -> . command PIPE command
+    (15) command -> . command RIGHT argument
+    (4) assign -> . command EQUALS command
+    (13) if_statement -> . if_condition END THEN END statements END FI
+    (14) if_else -> . if_condition END THEN END statements END ELSE END statements END FI
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+    (8) if_condition -> . IF L_RECT argument cond_op argument R_RECT
+
+    END             shift and go to state 24
+    SEMICOLON       shift and go to state 25
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+    IF              shift and go to state 12
+
+    statement                      shift and go to state 23
+    command                        shift and go to state 4
+    assign                         shift and go to state 5
+    if_statement                   shift and go to state 6
+    if_else                        shift and go to state 7
+    argument                       shift and go to state 8
+    if_condition                   shift and go to state 9
+
+state 14
+
+    (20) separator -> SEMICOLON .
+
+    END             reduce using rule 20 (separator -> SEMICOLON .)
+    SEMICOLON       reduce using rule 20 (separator -> SEMICOLON .)
+    ARG             reduce using rule 20 (separator -> SEMICOLON .)
+    DOLLAR          reduce using rule 20 (separator -> SEMICOLON .)
+    IF              reduce using rule 20 (separator -> SEMICOLON .)
+
+
+state 15
+
+    (21) separator -> END .
+
+    END             reduce using rule 21 (separator -> END .)
+    SEMICOLON       reduce using rule 21 (separator -> END .)
+    ARG             reduce using rule 21 (separator -> END .)
+    DOLLAR          reduce using rule 21 (separator -> END .)
+    IF              reduce using rule 21 (separator -> END .)
+
+
+state 16
+
+    (6) command -> command argument .
+
+    PIPE            reduce using rule 6 (command -> command argument .)
+    RIGHT           reduce using rule 6 (command -> command argument .)
+    EQUALS          reduce using rule 6 (command -> command argument .)
+    ARG             reduce using rule 6 (command -> command argument .)
+    DOLLAR          reduce using rule 6 (command -> command argument .)
+    SEMICOLON       reduce using rule 6 (command -> command argument .)
+    END             reduce using rule 6 (command -> command argument .)
+    $end            reduce using rule 6 (command -> command argument .)
+
+
+state 17
+
+    (7) command -> command PIPE . command
+    (5) command -> . argument
+    (6) command -> . command argument
+    (7) command -> . command PIPE command
+    (15) command -> . command RIGHT argument
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+
+    command                        shift and go to state 26
+    argument                       shift and go to state 8
+
+state 18
+
+    (15) command -> command RIGHT . argument
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+
+    argument                       shift and go to state 27
+
+state 19
+
+    (4) assign -> command EQUALS . command
+    (5) command -> . argument
+    (6) command -> . command argument
+    (7) command -> . command PIPE command
+    (15) command -> . command RIGHT argument
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+
+    command                        shift and go to state 28
+    argument                       shift and go to state 8
+
+state 20
+
+    (13) if_statement -> if_condition END . THEN END statements END FI
+    (14) if_else -> if_condition END . THEN END statements END ELSE END statements END FI
+
+    THEN            shift and go to state 29
+
+
+state 21
+
+    (3) argument -> DOLLAR ARG .
+
+    PIPE            reduce using rule 3 (argument -> DOLLAR ARG .)
+    RIGHT           reduce using rule 3 (argument -> DOLLAR ARG .)
+    EQUALS          reduce using rule 3 (argument -> DOLLAR ARG .)
+    ARG             reduce using rule 3 (argument -> DOLLAR ARG .)
+    DOLLAR          reduce using rule 3 (argument -> DOLLAR ARG .)
+    SEMICOLON       reduce using rule 3 (argument -> DOLLAR ARG .)
+    END             reduce using rule 3 (argument -> DOLLAR ARG .)
+    $end            reduce using rule 3 (argument -> DOLLAR ARG .)
+    EQ              reduce using rule 3 (argument -> DOLLAR ARG .)
+    NE              reduce using rule 3 (argument -> DOLLAR ARG .)
+    LT              reduce using rule 3 (argument -> DOLLAR ARG .)
+    GT              reduce using rule 3 (argument -> DOLLAR ARG .)
+    R_RECT          reduce using rule 3 (argument -> DOLLAR ARG .)
+
+
+state 22
+
+    (8) if_condition -> IF L_RECT . argument cond_op argument R_RECT
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+
+    argument                       shift and go to state 30
+
+state 23
+
+    (25) statements -> statements separator statement .
+
+    SEMICOLON       reduce using rule 25 (statements -> statements separator statement .)
+    END             reduce using rule 25 (statements -> statements separator statement .)
+    $end            reduce using rule 25 (statements -> statements separator statement .)
+
+
+state 24
+
+    (22) separator -> separator END .
+
+    END             reduce using rule 22 (separator -> separator END .)
+    SEMICOLON       reduce using rule 22 (separator -> separator END .)
+    ARG             reduce using rule 22 (separator -> separator END .)
+    DOLLAR          reduce using rule 22 (separator -> separator END .)
+    IF              reduce using rule 22 (separator -> separator END .)
+
+
+state 25
+
+    (23) separator -> separator SEMICOLON .
+
+    END             reduce using rule 23 (separator -> separator SEMICOLON .)
+    SEMICOLON       reduce using rule 23 (separator -> separator SEMICOLON .)
+    ARG             reduce using rule 23 (separator -> separator SEMICOLON .)
+    DOLLAR          reduce using rule 23 (separator -> separator SEMICOLON .)
+    IF              reduce using rule 23 (separator -> separator SEMICOLON .)
+
+
+state 26
+
+    (7) command -> command PIPE command .
+    (6) command -> command . argument
+    (7) command -> command . PIPE command
+    (15) command -> command . RIGHT argument
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+
+  ! shift/reduce conflict for PIPE resolved as shift
+  ! shift/reduce conflict for RIGHT resolved as shift
+  ! shift/reduce conflict for ARG resolved as shift
+  ! shift/reduce conflict for DOLLAR resolved as shift
+    EQUALS          reduce using rule 7 (command -> command PIPE command .)
+    SEMICOLON       reduce using rule 7 (command -> command PIPE command .)
+    END             reduce using rule 7 (command -> command PIPE command .)
+    $end            reduce using rule 7 (command -> command PIPE command .)
+    PIPE            shift and go to state 17
+    RIGHT           shift and go to state 18
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+
+  ! PIPE            [ reduce using rule 7 (command -> command PIPE command .) ]
+  ! RIGHT           [ reduce using rule 7 (command -> command PIPE command .) ]
+  ! ARG             [ reduce using rule 7 (command -> command PIPE command .) ]
+  ! DOLLAR          [ reduce using rule 7 (command -> command PIPE command .) ]
+
+    argument                       shift and go to state 16
+
+state 27
+
+    (15) command -> command RIGHT argument .
+
+    PIPE            reduce using rule 15 (command -> command RIGHT argument .)
+    RIGHT           reduce using rule 15 (command -> command RIGHT argument .)
+    EQUALS          reduce using rule 15 (command -> command RIGHT argument .)
+    ARG             reduce using rule 15 (command -> command RIGHT argument .)
+    DOLLAR          reduce using rule 15 (command -> command RIGHT argument .)
+    SEMICOLON       reduce using rule 15 (command -> command RIGHT argument .)
+    END             reduce using rule 15 (command -> command RIGHT argument .)
+    $end            reduce using rule 15 (command -> command RIGHT argument .)
+
+
+state 28
+
+    (4) assign -> command EQUALS command .
+    (6) command -> command . argument
+    (7) command -> command . PIPE command
+    (15) command -> command . RIGHT argument
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+
+    SEMICOLON       reduce using rule 4 (assign -> command EQUALS command .)
+    END             reduce using rule 4 (assign -> command EQUALS command .)
+    $end            reduce using rule 4 (assign -> command EQUALS command .)
+    PIPE            shift and go to state 17
+    RIGHT           shift and go to state 18
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+
+    argument                       shift and go to state 16
+
+state 29
+
+    (13) if_statement -> if_condition END THEN . END statements END FI
+    (14) if_else -> if_condition END THEN . END statements END ELSE END statements END FI
+
+    END             shift and go to state 31
+
+
+state 30
+
+    (8) if_condition -> IF L_RECT argument . cond_op argument R_RECT
+    (9) cond_op -> . EQ
+    (10) cond_op -> . NE
+    (11) cond_op -> . LT
+    (12) cond_op -> . GT
+
+    EQ              shift and go to state 33
+    NE              shift and go to state 34
+    LT              shift and go to state 35
+    GT              shift and go to state 36
+
+    cond_op                        shift and go to state 32
+
+state 31
+
+    (13) if_statement -> if_condition END THEN END . statements END FI
+    (14) if_else -> if_condition END THEN END . statements END ELSE END statements END FI
+    (24) statements -> . statement
+    (25) statements -> . statements separator statement
+    (16) statement -> . command
+    (17) statement -> . assign
+    (18) statement -> . if_statement
+    (19) statement -> . if_else
+    (5) command -> . argument
+    (6) command -> . command argument
+    (7) command -> . command PIPE command
+    (15) command -> . command RIGHT argument
+    (4) assign -> . command EQUALS command
+    (13) if_statement -> . if_condition END THEN END statements END FI
+    (14) if_else -> . if_condition END THEN END statements END ELSE END statements END FI
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+    (8) if_condition -> . IF L_RECT argument cond_op argument R_RECT
+
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+    IF              shift and go to state 12
+
+    if_condition                   shift and go to state 9
+    statements                     shift and go to state 37
+    statement                      shift and go to state 3
+    command                        shift and go to state 4
+    assign                         shift and go to state 5
+    if_statement                   shift and go to state 6
+    if_else                        shift and go to state 7
+    argument                       shift and go to state 8
+
+state 32
+
+    (8) if_condition -> IF L_RECT argument cond_op . argument R_RECT
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+
+    argument                       shift and go to state 38
+
+state 33
+
+    (9) cond_op -> EQ .
+
+    ARG             reduce using rule 9 (cond_op -> EQ .)
+    DOLLAR          reduce using rule 9 (cond_op -> EQ .)
+
+
+state 34
+
+    (10) cond_op -> NE .
+
+    ARG             reduce using rule 10 (cond_op -> NE .)
+    DOLLAR          reduce using rule 10 (cond_op -> NE .)
+
+
+state 35
+
+    (11) cond_op -> LT .
+
+    ARG             reduce using rule 11 (cond_op -> LT .)
+    DOLLAR          reduce using rule 11 (cond_op -> LT .)
+
+
+state 36
+
+    (12) cond_op -> GT .
+
+    ARG             reduce using rule 12 (cond_op -> GT .)
+    DOLLAR          reduce using rule 12 (cond_op -> GT .)
+
+
+state 37
+
+    (13) if_statement -> if_condition END THEN END statements . END FI
+    (14) if_else -> if_condition END THEN END statements . END ELSE END statements END FI
+    (25) statements -> statements . separator statement
+    (20) separator -> . SEMICOLON
+    (21) separator -> . END
+    (22) separator -> . separator END
+    (23) separator -> . separator SEMICOLON
+
+    END             shift and go to state 39
+    SEMICOLON       shift and go to state 14
+
+    separator                      shift and go to state 13
+
+state 38
+
+    (8) if_condition -> IF L_RECT argument cond_op argument . R_RECT
+
+    R_RECT          shift and go to state 40
+
+
+state 39
+
+    (13) if_statement -> if_condition END THEN END statements END . FI
+    (14) if_else -> if_condition END THEN END statements END . ELSE END statements END FI
+    (21) separator -> END .
+
+    FI              shift and go to state 41
+    ELSE            shift and go to state 42
+    END             reduce using rule 21 (separator -> END .)
+    SEMICOLON       reduce using rule 21 (separator -> END .)
+    ARG             reduce using rule 21 (separator -> END .)
+    DOLLAR          reduce using rule 21 (separator -> END .)
+    IF              reduce using rule 21 (separator -> END .)
+
+
+state 40
+
+    (8) if_condition -> IF L_RECT argument cond_op argument R_RECT .
+
+    END             reduce using rule 8 (if_condition -> IF L_RECT argument cond_op argument R_RECT .)
+
+
+state 41
+
+    (13) if_statement -> if_condition END THEN END statements END FI .
+
+    SEMICOLON       reduce using rule 13 (if_statement -> if_condition END THEN END statements END FI .)
+    END             reduce using rule 13 (if_statement -> if_condition END THEN END statements END FI .)
+    $end            reduce using rule 13 (if_statement -> if_condition END THEN END statements END FI .)
+
+
+state 42
+
+    (14) if_else -> if_condition END THEN END statements END ELSE . END statements END FI
+
+    END             shift and go to state 43
+
+
+state 43
+
+    (14) if_else -> if_condition END THEN END statements END ELSE END . statements END FI
+    (24) statements -> . statement
+    (25) statements -> . statements separator statement
+    (16) statement -> . command
+    (17) statement -> . assign
+    (18) statement -> . if_statement
+    (19) statement -> . if_else
+    (5) command -> . argument
+    (6) command -> . command argument
+    (7) command -> . command PIPE command
+    (15) command -> . command RIGHT argument
+    (4) assign -> . command EQUALS command
+    (13) if_statement -> . if_condition END THEN END statements END FI
+    (14) if_else -> . if_condition END THEN END statements END ELSE END statements END FI
+    (2) argument -> . ARG
+    (3) argument -> . DOLLAR ARG
+    (8) if_condition -> . IF L_RECT argument cond_op argument R_RECT
+
+    ARG             shift and go to state 10
+    DOLLAR          shift and go to state 11
+    IF              shift and go to state 12
+
+    if_condition                   shift and go to state 9
+    statements                     shift and go to state 44
+    statement                      shift and go to state 3
+    command                        shift and go to state 4
+    assign                         shift and go to state 5
+    if_statement                   shift and go to state 6
+    if_else                        shift and go to state 7
+    argument                       shift and go to state 8
+
+state 44
+
+    (14) if_else -> if_condition END THEN END statements END ELSE END statements . END FI
+    (25) statements -> statements . separator statement
+    (20) separator -> . SEMICOLON
+    (21) separator -> . END
+    (22) separator -> . separator END
+    (23) separator -> . separator SEMICOLON
+
+    END             shift and go to state 45
+    SEMICOLON       shift and go to state 14
+
+    separator                      shift and go to state 13
+
+state 45
+
+    (14) if_else -> if_condition END THEN END statements END ELSE END statements END . FI
+    (21) separator -> END .
+
+    FI              shift and go to state 46
+    END             reduce using rule 21 (separator -> END .)
+    SEMICOLON       reduce using rule 21 (separator -> END .)
+    ARG             reduce using rule 21 (separator -> END .)
+    DOLLAR          reduce using rule 21 (separator -> END .)
+    IF              reduce using rule 21 (separator -> END .)
+
+
+state 46
+
+    (14) if_else -> if_condition END THEN END statements END ELSE END statements END FI .
+
+    SEMICOLON       reduce using rule 14 (if_else -> if_condition END THEN END statements END ELSE END statements END FI .)
+    END             reduce using rule 14 (if_else -> if_condition END THEN END statements END ELSE END statements END FI .)
+    $end            reduce using rule 14 (if_else -> if_condition END THEN END statements END ELSE END statements END FI .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PIPE in state 26 resolved as shift
+WARNING: shift/reduce conflict for RIGHT in state 26 resolved as shift
+WARNING: shift/reduce conflict for ARG in state 26 resolved as shift
+WARNING: shift/reduce conflict for DOLLAR in state 26 resolved as shift

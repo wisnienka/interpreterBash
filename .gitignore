@@ -1,5 +1,1 @@
 *.idea
-*.iml
-venv
-__pycache__
-parser.out
